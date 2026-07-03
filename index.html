@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR-GENETATOR</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span>QR-GENETATOR<span class="sub">QR generator · client-side</span></div>
+</div>
+
+<div class="hero">
+  <h1>ใส่ลิงก์<br>ได้ <em>QR ที่ใช้งานจริง</em></h1>
+  <p>กรอกลิงก์ ใส่โลโก้ตรงกลางได้ถ้าต้องการ เลือกระดับการแก้ไขข้อผิดพลาดให้เหมาะกับงานพิมพ์ ทุกอย่างประมวลผลในเบราว์เซอร์ของคุณ ไม่มีข้อมูลส่งออกไปที่ไหน</p>
+</div>
+
+<div class="stage">
+
+  <form class="form-sheet" id="qr-form">
+    <div class="field">
+      <span class="field-index">01 / ลิงก์</span>
+      <label for="url-input">ลิงก์ที่ต้องการทำ QR</label>
+      <div class="hint">เช่น https://example.com/menu</div>
+      <input type="url" id="url-input" placeholder="https://" required autocomplete="off">
+    </div>
+
+    <div class="field">
+      <span class="field-index">02 / โลโก้</span>
+      <label for="logo-input">รูปตรงกลาง (ไม่บังคับ)</label>
+      <div class="hint">แสดงผลที่ 30% ของขนาด QR พร้อมมุมโค้ง — แนะนำภาพสี่เหลี่ยมจัตุรัส พื้นหลังโปร่งใสหรือสีพื้น</div>
+      <div class="drop" id="drop-zone" tabindex="0" role="button" aria-label="เลือกไฟล์รูปโลโก้">
+        คลิกหรือลากรูปมาวางที่นี่
+        <input type="file" id="logo-input" accept="image/*">
+      </div>
+      <div class="logo-preview" id="logo-preview">
+        <img id="logo-preview-img" alt="ตัวอย่างโลโก้">
+        <span id="logo-filename"></span>
+        <button type="button" id="logo-remove">ลบ</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-index">03 / ระดับแก้ไขข้อผิดพลาด</span>
+      <label>Error Correction</label>
+      <div class="hint">ยิ่งสูง QR ยิ่งทนต่อรอยขีดข่วนหรือการบังภาพ — เมื่อใส่โลโก้ ระบบจะบังคับใช้ระดับสูงสุดให้อัตโนมัติ</div>
+      <div class="ec-row">
+        <div class="ec-opt"><input type="radio" name="ec" id="ec-l" value="L"><label for="ec-l">L · 7%</label></div>
+        <div class="ec-opt"><input type="radio" name="ec" id="ec-m" value="M"><label for="ec-m">M · 15%</label></div>
+        <div class="ec-opt"><input type="radio" name="ec" id="ec-q" value="Q"><label for="ec-q">Q · 25%</label></div>
+        <div class="ec-opt"><input type="radio" name="ec" id="ec-h" value="H" checked><label for="ec-h">H · 30%</label></div>
+      </div>
+      <div class="ec-note" id="ec-note">ล็อกที่ H เพราะมีโลโก้ตรงกลาง</div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn">สร้าง QR</button>
+      <button type="button" class="btn secondary" id="reset-btn">ล้างค่า</button>
+    </div>
+  </form>
+
+  <div class="viewfinder-wrap">
+    <div class="viewfinder" id="viewfinder">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="scanline" id="scanline"></div>
+      <canvas id="qr-canvas" width="500" height="500"></canvas>
+    </div>
+    <div class="meta-row">
+      <span id="meta-size">500 × 500 px</span>
+      <span id="meta-ec">EC: H</span>
+      <span id="meta-status">รอข้อมูล…</span>
+    </div>
+    <div class="download-row">
+      <button class="btn secondary" id="download-png" disabled>ดาวน์โหลด PNG</button>
+      <button class="btn secondary" id="download-svg" disabled>ดาวน์โหลด SVG</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>ประมวลผลทั้งหมดในเบราว์เซอร์ของคุณ (client-side) — ไม่มีการส่งลิงก์หรือรูปภาพออกจากเครื่อง</footer>
+
+<script src="assets/vendor/qrcode.min.js"></script>
+<script src="assets/js/script.js"></script>
+
+</body>
+</html>
